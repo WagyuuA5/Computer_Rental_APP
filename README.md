@@ -43,7 +43,7 @@ Pastikan Flutter SDK sudah terinstal.
 Clone repositori ini:
 
 Bash
-git clone [https://github.com/WagyuuA5/Computer_Rental_APP.git]
+Clone: git clone https://github.com/WagyuuA5/Computer_Rental_APP.git
 Jalankan flutter pub get.
 
 Jalankan aplikasi dengan flutter run.
