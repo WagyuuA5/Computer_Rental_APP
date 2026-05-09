@@ -1,4 +1,4 @@
-# 💻 Computer_Rental_APP - Simple Rental Solution
+# 💻 Computer_Rental_APP
 ![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
 ![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Mid--Term--Project-orange?style=for-the-badge)
