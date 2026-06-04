@@ -1,8 +1,6 @@
 # 💻 Computer Rental App
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/flutter/flutter-original.svg" alt="flutter" width="80" height="80"/>
-</p>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white" alt="Flutter">
@@ -22,7 +20,6 @@
 
 - [About the Project](#-about-the-project)
 - [Features](#-features)
-- [Project Architecture](#-project-architecture)
 - [Learning Notes](#-learning-notes)
 - [Tech Stack](#-tech-stack)
 - [Getting Started](#-getting-started)
