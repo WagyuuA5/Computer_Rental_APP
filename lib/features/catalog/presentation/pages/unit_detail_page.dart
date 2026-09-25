@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_design_system/my_design_system.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../domain/entities/rental_unit.dart';
+import '../../../booking/domain/usecases/calculate_booking_price.dart';
 
 class UnitDetailPage extends ConsumerStatefulWidget {
   final RentalUnit unit;
@@ -123,6 +124,65 @@ class _UnitDetailPageState extends ConsumerState<UnitDetailPage> {
               ),
             ),
           ),
+          if (_selectedStart != null) ...[
+            const SizedBox(height: 16),
+            const Text('Rincian Harga:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            const SizedBox(height: 8),
+            AppCard(
+              padding: const EdgeInsets.all(16),
+              child: Builder(
+                builder: (context) {
+                  int durationDays = 1;
+                  if (_selectedEnd != null) {
+                    durationDays = _selectedEnd!.difference(_selectedStart!).inDays + 1;
+                  }
+                  
+                  final calculator = CalculateBookingPrice();
+                  final result = calculator(
+                    durationDays: durationDays,
+                    pricePerDay: widget.unit.pricePerDay,
+                    additionalFees: 0, // Mock fee
+                  );
+                  
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Durasi ($durationDays hari) x Rp ${widget.unit.pricePerDay.toInt()}'),
+                          Text('Rp ${result.subtotal.toInt()}'),
+                        ],
+                      ),
+                      if (result.discount > 0)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Diskon (10%)', style: TextStyle(color: Colors.green)),
+                            Text('- Rp ${result.discount.toInt()}', style: const TextStyle(color: Colors.green)),
+                          ],
+                        ),
+                      if (result.additionalFees > 0)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Biaya Tambahan'),
+                            Text('Rp ${result.additionalFees.toInt()}'),
+                          ],
+                        ),
+                      const Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Total Pembayaran', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text('Rp ${result.total.toInt()}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.blue)),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ],
         ],
       ),
       bottomNavigationBar: SafeArea(
