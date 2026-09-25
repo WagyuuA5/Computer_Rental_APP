@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_design_system/my_design_system.dart';
 import 'core/injection.dart';
 import 'features/catalog/presentation/pages/catalog_page.dart';
+import 'features/booking/presentation/pages/my_bookings_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,7 +65,10 @@ class MainNavigationPage extends StatelessWidget {
               title: const Text('Booking Saya'),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
-                // Navigate to My Bookings
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const MyBookingsPage()),
+                );
               },
             ),
           ),
