@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:my_design_system/my_design_system.dart';
 import 'core/injection.dart';
 
 void main() async {
@@ -22,14 +22,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Computer Rental App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.system,
       home: const MainNavigationPage(),
     );
   }
 }
+
 
 class MainNavigationPage extends StatelessWidget {
   const MainNavigationPage({super.key});
@@ -43,29 +43,41 @@ class MainNavigationPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          ListTile(
-            title: const Text('Katalog Unit'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              // Navigate to Catalog
-            },
+          AppCard(
+            padding: EdgeInsets.zero,
+            child: ListTile(
+              title: const Text('Katalog Unit'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                // Navigate to Catalog
+              },
+            ),
           ),
-          ListTile(
-            title: const Text('Booking Saya'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              // Navigate to My Bookings
-            },
+          const SizedBox(height: 12),
+          AppCard(
+            padding: EdgeInsets.zero,
+            child: ListTile(
+              title: const Text('Booking Saya'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                // Navigate to My Bookings
+              },
+            ),
           ),
-          ListTile(
-            title: const Text('Admin Panel'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              // Navigate to Admin
-            },
+          const SizedBox(height: 12),
+          AppCard(
+            padding: EdgeInsets.zero,
+            child: ListTile(
+              title: const Text('Admin Panel'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                // Navigate to Admin
+              },
+            ),
           ),
         ],
       ),
     );
   }
 }
+
