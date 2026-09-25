@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_design_system/my_design_system.dart';
 import '../providers/catalog_provider.dart';
+import 'unit_detail_page.dart';
 
 class CatalogPage extends ConsumerStatefulWidget {
   const CatalogPage({super.key});
@@ -61,39 +62,49 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
             itemCount: sortedUnits.length,
             itemBuilder: (context, index) {
               final unit = sortedUnits[index];
-              return AppCard(
-                padding: EdgeInsets.zero,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        color: Colors.grey[300],
-                        child: const Icon(Icons.computer, size: 50, color: Colors.grey),
-                      ),
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => UnitDetailPage(unit: unit),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            unit.name,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(height: 4),
-                          Text('RAM: ${unit.ramGB}GB | GPU: ${unit.gpu}'),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Rp ${unit.pricePerHour.toInt()}/jam',
-                            style: const TextStyle(color: Colors.blue),
-                          ),
-                        ],
+                  );
+                },
+                child: AppCard(
+                  padding: EdgeInsets.zero,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          color: Colors.grey[300],
+                          child: const Icon(Icons.computer, size: 50, color: Colors.grey),
+                        ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              unit.name,
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 4),
+                            Text('RAM: ${unit.ramGB}GB | GPU: ${unit.gpu}'),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Rp ${unit.pricePerHour.toInt()}/jam',
+                              style: const TextStyle(color: Colors.blue),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
