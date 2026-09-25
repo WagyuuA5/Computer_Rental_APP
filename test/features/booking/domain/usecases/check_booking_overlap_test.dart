@@ -9,7 +9,7 @@ void main() {
     usecase = CheckBookingOverlap();
   });
 
-  Booking createBooking(DateTime start, DateTime end, {String status = 'confirmed'}) {
+  Booking createBooking(DateTime start, DateTime end, {BookingStatus status = BookingStatus.confirmed}) {
     return Booking(
       id: '1',
       unitId: 'unit_1',
@@ -127,7 +127,7 @@ void main() {
 
   test('Booking existing yang dibatalkan tidak menyebabkan overlap', () {
     final existing = [
-      createBooking(DateTime(2026, 10, 10), DateTime(2026, 10, 15), status: 'cancelled'),
+      createBooking(DateTime(2026, 10, 10), DateTime(2026, 10, 15), status: BookingStatus.cancelled),
     ];
     final result = usecase(
       newStart: DateTime(2026, 10, 10),

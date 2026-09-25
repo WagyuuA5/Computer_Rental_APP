@@ -19,7 +19,7 @@ class CheckBookingOverlap {
     }
 
     for (final booking in existingBookings) {
-      if (booking.status == 'cancelled' || booking.status == 'rejected') {
+      if (booking.status == BookingStatus.cancelled) {
         continue;
       }
 
