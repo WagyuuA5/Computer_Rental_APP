@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_design_system/my_design_system.dart';
+import '../../../../core/providers/theme_provider.dart';
+import '../../../../core/utils/route_utils.dart';
 import '../../../catalog/presentation/pages/catalog_page.dart';
 import '../../../booking/presentation/pages/my_bookings_page.dart';
 import '../../../admin/presentation/pages/admin_panel_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // Mock summary data
     final int ongoingBookingsCount = 1;
     final int pendingApprovalsCount = 2; // for admin role
 
+    final themeMode = ref.watch(themeProvider);
+    final isDark = themeMode == ThemeMode.dark || 
+                   (themeMode == ThemeMode.system && MediaQuery.of(context).platformBrightness == Brightness.dark);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Computer Rental Dashboard'),
+        actions: [
+          IconButton(
+            icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+            onPressed: () {
+              ThemeUtils.toggleTheme(ref);
+            },
+          ),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -49,7 +64,7 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const CatalogPage()),
+                  SlidePageRoute(page: const CatalogPage()),
                 );
               },
             ),
@@ -65,7 +80,7 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const MyBookingsPage()),
+                  SlidePageRoute(page: const MyBookingsPage()),
                 );
               },
             ),
@@ -83,7 +98,7 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const AdminPanelPage()),
+                  SlidePageRoute(page: const AdminPanelPage()),
                 );
               },
             ),
