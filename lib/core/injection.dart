@@ -5,10 +5,18 @@ import '../features/catalog/data/repositories/rental_repository_impl.dart';
 import '../features/catalog/domain/repositories/rental_repository.dart';
 import '../features/catalog/domain/usecases/get_units.dart';
 import '../features/catalog/domain/usecases/get_unit_detail.dart';
+import '../features/booking/domain/usecases/confirm_booking.dart';
+import '../features/booking/domain/usecases/cancel_booking.dart';
+import 'services/notification_service.dart';
 
 final sl = GetIt.instance;
 
 Future<void> initDependencies() async {
+  // Services
+  final notificationService = NotificationService();
+  await notificationService.init();
+  sl.registerSingleton<NotificationService>(notificationService);
+
   // Datasources
   sl.registerLazySingleton<RentalRemoteDataSource>(() => RentalRemoteDataSourceMockImpl());
 
@@ -18,5 +26,7 @@ Future<void> initDependencies() async {
   // Usecases
   sl.registerLazySingleton(() => GetUnits(sl()));
   sl.registerLazySingleton(() => GetUnitDetail(sl()));
+  sl.registerLazySingleton(() => ConfirmBooking(sl()));
+  sl.registerLazySingleton(() => CancelBooking(sl()));
 }
 
