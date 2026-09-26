@@ -4,6 +4,7 @@ import 'package:my_design_system/my_design_system.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../domain/entities/rental_unit.dart';
 import '../../../booking/domain/usecases/calculate_booking_price.dart';
+import '../../../payment/presentation/pages/checkout_page.dart';
 
 class UnitDetailPage extends ConsumerStatefulWidget {
   final RentalUnit unit;
@@ -190,7 +191,28 @@ class _UnitDetailPageState extends ConsumerState<UnitDetailPage> {
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(
             onPressed: (_selectedStart != null) ? () {
-              // Confirm booking action
+              int durationDays = 1;
+              if (_selectedEnd != null) {
+                durationDays = _selectedEnd!.difference(_selectedStart!).inDays + 1;
+              }
+              final calculator = CalculateBookingPrice();
+              final result = calculator(
+                durationDays: durationDays,
+                pricePerDay: widget.unit.pricePerDay,
+                additionalFees: 0,
+              );
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => CheckoutPage(
+                    unit: widget.unit,
+                    startDate: _selectedStart!,
+                    endDate: _selectedEnd ?? _selectedStart!,
+                    totalPrice: result.total,
+                  ),
+                ),
+              );
             } : null,
             child: const Text('Lanjut Booking'),
           ),
