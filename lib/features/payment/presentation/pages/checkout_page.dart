@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_design_system/my_design_system.dart';
 import '../../../../core/injection.dart';
 import '../../../../core/services/payment_service.dart';
+import '../../../../core/services/invoice_service.dart';
 import '../../../catalog/domain/entities/rental_unit.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -56,6 +57,21 @@ class _CheckoutPageState extends State<CheckoutPage> {
           title: const Text('Pembayaran Berhasil'),
           content: const Text('Booking Anda telah masuk dan menunggu persetujuan Admin (Pending).'),
           actions: [
+            TextButton(
+              onPressed: () async {
+                final invoiceService = sl<InvoiceService>();
+                final file = await invoiceService.generateInvoice(
+                  bookingId: 'NEW_BOOKING_123',
+                  unit: widget.unit,
+                  startDate: widget.startDate,
+                  endDate: widget.endDate,
+                  totalPrice: widget.totalPrice,
+                  paymentMethod: _selectedPaymentMethod,
+                );
+                await invoiceService.shareInvoice(file);
+              },
+              child: const Text('Share Invoice (PDF)'),
+            ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // close dialog
