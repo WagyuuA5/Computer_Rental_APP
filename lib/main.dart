@@ -4,6 +4,7 @@ import 'package:my_design_system/my_design_system.dart';
 import 'core/injection.dart';
 import 'features/catalog/presentation/pages/catalog_page.dart';
 import 'features/booking/presentation/pages/my_bookings_page.dart';
+import 'features/admin/presentation/pages/admin_panel_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,7 +80,10 @@ class MainNavigationPage extends StatelessWidget {
               title: const Text('Admin Panel'),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
-                // Navigate to Admin
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AdminPanelPage()),
+                );
               },
             ),
           ),
