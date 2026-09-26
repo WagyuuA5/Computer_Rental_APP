@@ -8,6 +8,7 @@ import '../features/catalog/domain/usecases/get_unit_detail.dart';
 import '../features/booking/domain/usecases/confirm_booking.dart';
 import '../features/booking/domain/usecases/cancel_booking.dart';
 import 'services/notification_service.dart';
+import 'services/payment_service.dart';
 
 final sl = GetIt.instance;
 
@@ -16,6 +17,7 @@ Future<void> initDependencies() async {
   final notificationService = NotificationService();
   await notificationService.init();
   sl.registerSingleton<NotificationService>(notificationService);
+  sl.registerLazySingleton<PaymentService>(() => PaymentService());
 
   // Datasources
   sl.registerLazySingleton<RentalRemoteDataSource>(() => RentalRemoteDataSourceMockImpl());
